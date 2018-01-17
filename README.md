@@ -1,3 +1,3 @@
 # MiniMusicPlayer
 
-a mini music olayer by vue
+a mini music player by vue
