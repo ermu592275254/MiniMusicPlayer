@@ -1,0 +1,750 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+
+        .main {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            min-width: 922px;
+            height: 667px;
+            color: #fff;
+            background-color: rgba(0, 0, 0, .8);
+            /*border: 2px solid #000;*/
+        }
+
+        .bg-blur {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            filter: blur(20px);
+            z-index: -1;
+        }
+
+        .disc {
+            position: relative;
+            margin-top: 10%;
+            margin-left: 10%;
+            width: 300px;
+            height: 300px;
+            border-radius: 300px;
+            transform: rotate(45deg);
+            /*background-color: #5e5e5e;*/
+            background-image: radial-gradient(5em 30em ellipse, #fff, #000);
+            border: 2px solid #131313;
+            box-shadow: 0 0 0 10px #343935;
+            opacity: 0.7;
+        }
+
+        .song-img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform-origin: center center;
+            transform: translate(-50%, -50%) rotate(0deg);
+            width: 200px;
+            height: 200px;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            border: 2px solid #000;
+            border-radius: 200px;
+            animation: animations1 10s linear infinite forwards;
+            animation-play-state: paused;
+        }
+
+        @keyframes animations1 {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+            50% {
+                transform: translate(-50%, -50%) rotate(180deg);
+            }
+            100% {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        .right-part {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 600px;
+        }
+
+        .title {
+            margin: 50px 0 0 30px;
+            font-size: 30px;
+        }
+
+        .artist {
+            margin: 0 30px;
+            font-size: 16px;
+            line-height: 50px;
+            border-bottom: 1px solid #fff;
+        }
+
+        .lyrics {
+            margin-top: 20px;
+            height: 400px;
+            line-height: 35px;
+            overflow: scroll;
+            color: #fff;
+            white-space: pre-line;
+            text-align: center;
+        }
+
+        .lyrics::-webkit-scrollbar {
+            display: none;
+        }
+
+        .pink {
+            color: #eb7470;
+        }
+
+        .ctrl-box {
+            margin: 15% 0 0 10%;
+            vertical-align: middle;
+        }
+
+        .play {
+            margin: 0 20px;
+            position: relative;
+            display: inline-block;
+            height: 36px;
+            width: 36px;
+            border: 2px solid #fff;
+            border-radius: 40px;
+            -webkit-border-radius: 40px;
+            -moz-border-radius: 40px;
+            background-color: transparent;
+        }
+
+        .black-play {
+            border-color: #000 !important;
+        }
+
+        .black-play:after, .black-play:before {
+            border-left-color: #000 !important;
+        }
+
+        .play:before {
+            content: '';
+            height: 0;
+            width: 0;
+            display: block;
+            border: 10px transparent solid;
+            border-right-width: 0;
+            border-left-color: #fff;
+            position: absolute;
+            top: 8px;
+            left: 15px;
+        }
+
+        .pause {
+            margin: 0 20px;
+            position: relative;
+            display: inline-block;
+            height: 36px;
+            width: 36px;
+            border: 2px solid #fff;
+            border-radius: 20px;
+            -webkit-border-radius: 20px;
+            -moz-border-radius: 20px;
+        }
+
+        .black-pause {
+            border-color: #000 !important;
+        }
+
+        .black-pause:after.black-pause:before {
+            background: #000 !important;
+        }
+
+        .pause:before, .pause:after {
+            content: '';
+            height: 20px;
+            width: 4px;
+            display: block;
+            background: #fff;
+            position: absolute;
+            top: 8px;
+            left: 12px;
+        }
+
+        .pause:after {
+            left: 20px;
+        }
+
+        .last {
+            position: relative;
+            display: inline-block;
+            height: 36px;
+            width: 36px;
+            border: 2px solid #fff;
+            border-radius: 20px;
+            -webkit-border-radius: 20px;
+            -moz-border-radius: 20px;
+        }
+
+        .black-last {
+            border-color: #000 !important;
+        }
+
+        .black-last:after {
+            border-left-color: #000;
+        }
+
+        .black-last:before {
+            background: #000;
+        }
+
+        .last:before {
+            content: '';
+            height: 0;
+            width: 0;
+            display: block;
+            border: 10px transparent solid;
+            border-left-width: 0;
+            border-right-color: #fff;
+            position: absolute;
+            top: 8px;
+            left: 16px;
+        }
+
+        .last:after {
+            content: '';
+            height: 20px;
+            width: 4px;
+            display: block;
+            background: #fff;
+            position: absolute;
+            top: 8px;
+            left: 10px;
+        }
+
+        .next {
+            position: relative;
+            display: inline-block;
+            height: 36px;
+            width: 36px;
+            border: 2px solid #fff;
+            border-radius: 20px;
+            -webkit-border-radius: 20px;
+            -moz-border-radius: 20px;
+        }
+
+        .black-next {
+            border-color: #000 !important;
+        }
+
+        .black-next:before {
+            border-right-color: #000 !important;
+        }
+
+        .black-next:after {
+            background: #000 !important;
+        }
+
+        .next:before {
+            content: '';
+            height: 0;
+            width: 0;
+            display: block;
+            border: 10px transparent solid;
+            border-right-width: 0;
+            border-left-color: #fff;
+            position: absolute;
+            top: 8px;
+            left: 10px;
+        }
+
+        .next:after {
+            content: '';
+            height: 20px;
+            width: 4px;
+            display: block;
+            background: #fff;
+            position: absolute;
+            top: 8px;
+            left: 22px;
+        }
+
+        .voice-icon {
+            position: relative;
+            display: inline-block;
+            margin-left: 20px;
+            width: 150px;
+            height: 42px;
+        }
+
+        .voice-icon-oh {
+            position: absolute;
+            height: 10px;
+            width: 10px;
+            display: block;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .voice-icon-oh:before {
+            content: '';
+            height: 8px;
+            width: 6px;
+            display: block;
+            background: #fff;
+        }
+
+        .voice-icon-oh:after {
+            content: '';
+            height: 8px;
+            width: 0;
+            display: block;
+            border: 5px transparent solid;
+            border-left-width: 0;
+            border-right-color: #fff;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            left: 6px;
+        }
+
+        .voice-icon-ov {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            left: 2px;
+        }
+
+        .voice-icon-ov:before {
+            content: '';
+            height: 19px;
+            width: 15px;
+            display: block;
+            border: 2px solid transparent;
+            border-right: 2px solid #FFF;
+            border-radius: 20px;
+            -webkit-border-radius: 20px;
+            -moz-border-radius: 20px;
+        }
+
+        .voice-icon-ov:after {
+            content: '';
+            height: 15px;
+            width: 15px;
+            display: block;
+            border: 2px solid transparent;
+            border-right: 2px solid #FFF;
+            border-radius: 15px;
+            -webkit-border-radius: 15px;
+            -moz-border-radius: 15px;
+            position: absolute;
+            top: 2px;
+            left: -4px;
+        }
+
+        .voice-icon-cv {
+            position: absolute;
+            top: 50%;
+            left: -6px;
+            transform: translateY(-50%);
+        }
+
+        .voice-icon-cv:before {
+            content: '';
+            height: 22px;
+            width: 22px;
+            display: block;
+            border: 2px solid #fff;
+            border-radius: 22px;
+        }
+
+        .voice-icon-cv:after {
+            content: '';
+            height: 25px;
+            width: 2px;
+            display: block;
+            background: #fff;
+            position: absolute;
+            top: 0;
+            left: 12px;
+            transform: rotate(45deg);
+        }
+
+        .voice {
+            float: right;
+            margin-right: 20px;
+            margin-top: 18px;
+            width: 100px !important;
+        }
+
+        .progress-bar {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 100%;
+        }
+
+        .timer {
+            vertical-align: sub;
+        }
+
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 80%;
+            border-radius: 10px;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+        }
+
+        input[type=range]::-webkit-slider-runnable-track {
+            height: 8px;
+            border-radius: 20px;
+        }
+
+        input[type=range]:focus {
+            outline: none;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            margin-top: -3px;
+            height: 14px;
+            width: 14px;
+            background: #eb7470;
+            border-radius: 50%;
+            border: solid 3px #fff;
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+        }
+
+        .com-tip {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            padding: 0 30px;
+            margin-top: 0px;
+            transform: translate(-50%, -50%);
+            background: rgba(55, 55, 55, .3);
+            border-radius: 5px;
+            color: #fff;
+            font-size: 15px;
+            line-height: 25px;
+            transition: margin-top .5s ease-in .1s;
+        }
+
+        .fade-enter-active {
+            transition: all .3s ease;
+        }
+
+        .fade-leave-active {
+            transition: all .8s ease;
+        }
+
+        .fade-enter, .fade-leave-to {
+            margin-top: 30px;
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+<div id="app" class="main">
+    <div class="bg-blur" :style="`background-image:url(${currentSong.img})`"></div>
+    <div class="disc">
+        <div class="song-img" :style="`background-image:url(${currentSong.img})`" ref="rotate"></div>
+        <img :src="currentSong.img" alt="" ref="songImg" style="visibility: hidden">
+    </div>
+    <div class="ctrl-box">
+        <div class="last" @click="last"></div>
+        <div :class="[isPlaying ? 'play':'pause']" @click="play"></div>
+        <div class="next" @click="next"></div>
+        <div class="voice-icon">
+            <div @click="voiceCtrl">
+                <div class="voice-icon-oh"></div>
+                <div class="voice-icon-ov" v-if="voice!=0"></div>
+                <div class="voice-icon-cv" v-if="voice==0"></div>
+                <div class="demoSpan2"></div>
+            </div>
+            <input class="voice" ref="voiceRange" type="range" v-model="voice" :max="100" min="0">
+        </div>
+    </div>
+    <div class="right-part">
+        <p class="title">{{currentSong.title}}</p>
+        <p class="artist">{{currentSong.artist}}</p>
+        <div class="lyrics" ref="lyrics">
+            <p v-for="(item,index) in currentLyrics" :class="{'pink': showPink(item,index)}">{{item.text}}</p>
+        </div>
+    </div>
+    <div class="progress-bar">
+        <span class="timer">{{percent | date}}</span>
+        <input type="range" ref="range" v-model="percent" :max="songDuration" min="0" @click="rangeChange"/>
+        <span class="timer">{{songDuration | date}}</span>
+    </div>
+    <audio ref="audio" :src="currentSong.url" @play="ready" @error="error" @timeupdate="updateTime"
+           @ended="ended"></audio>
+    <transition name="fade">
+        <com-tip class="com-tip" :is-show="showTip"></com-tip>
+    </transition>
+</div>
+</body>
+<script src="https://cdn.bootcss.com/color-thief/2.0.1/color-thief.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script>
+    var colorThief = new ColorThief();
+    var tip = {
+        props: ['isShow'],
+        template: '<div v-if="isShow">o(>﹏<)o~无法获取歌曲信息</div>'
+    };
+    new Vue({
+        el: '#app',
+        components: {
+            'com-tip': tip
+        },
+        data() {
+            return {
+                isPlaying: false,
+                currentSong: {},
+                songIndex: 0,
+                percent: 0,
+                songDuration: 0,
+                voice: 100,
+                keyDowm: false,
+                currentRowIndex: 0,
+                showTip: false,
+                bgImg: 'http://img.xiami.net/images/album/img8/451408/563461507451408.jpg',
+                songList: [{
+                    title: 'aLIEz',
+                    artist: '澤野弘之',
+                    img: 'http://pic.xiami.net/images/album/img31/59831/7064167921410329023_1.jpg',
+                    url: 'http://m128.xiami.net/831/59831/706416792/1773377276_15743273_l.mp3?auth_key=1516762800-0-0-ae075e2e74e8a6b47193922d65d9d60e',
+                    lyrics: null
+                }, {
+                    title: 'creep',
+                    artist: 'Radiohead',
+                    img: 'http://img.xiami.net/images/album/img54/10454/1694751418202640.jpg',
+                    url: 'http://m128.xiami.net/454/10454/56346/1079377_52077_l.mp3?auth_key=1516762800-0-0-87f30ce981385e09630d705e7be76a6c',
+                    lyrics: `[00:20.00]When you were here before
+                    [00:25.00]Couldn't look you in the eye
+                [00:30.00]You're just like an angel
+                [00:35.00]Your skin makes me cry
+                [00:40.00]You float like a feather
+                [00:45.00]In a beautiful world
+                [00:50.00]And I wish I was special
+                [00:56.00]You're so fuckin' special
+                [01:01.00]But I'm a creep, I'm a weirdo.
+                [01:11.00]What the hell am I doing here?
+                [01:17.00]I don't belong here.
+                [01:22.00]I don't care if it hurts
+                [01:27.00]I want to have control
+                [01:32.00]I want a perfect body
+                [01:37.00]I want a perfect soul
+                [01:42.00]I want you to notice
+                [01:48.00]When I'm not around
+                [01:53.00]You're so fuckin' special
+                [01:58.00]I wish I was special
+                [02:04.00]But I'm a creep, I'm a weirdo.
+                [02:14.00]What the hell am I doing here?
+                [02:20.00]I don't belong here.
+                [02:27.00]She's running out again,
+                [02:36.00]She's running out
+                [02:42.00]She's run run run running out...
+                [03:04.00]Whatever makes you happy
+                [03:11.00]Whatever you want
+                [03:16.00]You're so fuckin' special
+                [03:21.00]I wish I was special...
+                [03:26.00]But I'm a creep, I'm a weirdo,
+                [03:37.00]What the hell am I doing here?
+                [03:42.00]I don't belong here.
+                [03:47.00]I don't belong here.`
+                }, {
+                    title: 'All I Need',
+                    artist: 'Within Temptation',
+                    img: 'http://img.xiami.net/images/album/img92/24292/3538581257326025.jpg',
+                    url: 'http://m128.xiami.net/292/24292/353858/1769199707_2920725_l.mp3?auth_key=1516762800-0-0-024fb8daab0498328e706623b9f64d1f',
+                    lyrics: null
+                }, {
+                    title: 'Smoke on the Water',
+                    artist: 'Deep Purple',
+                    img: 'http://img.xiami.net/images/album/img41/10141/517381371635791.jpg',
+                    url: 'http://m128.xiami.net/1/141/10141/51738/1019071_296703_l.mp3?auth_key=1516762800-0-0-67e54b66643afe07bf82af588f8c570f',
+                    lyrics: null
+                }],
+                currentLyrics: [],
+            }
+        },
+        methods: {
+            ready(event) {
+                this.songDuration = event.target.duration || '0';
+            },
+            showPink(item, index){
+                if (this.percent >= item.time && this.currentLyrics[index + 1] && this.percent < this.currentLyrics[index + 1].time) {
+                    this.currentRowIndex = index;
+                    return true;
+                }
+            },
+            error() {
+                this.openTip();
+                this.$refs.rotate.style.animationPlayState = 'paused';
+            },
+            openTip(){
+                this.showTip = true;
+                setTimeout(() => {
+                    this.showTip = false;
+                }, 2000);
+            },
+            updateTime(event) {
+                this.songDuration = event.target.duration;
+                this.percent = event.target.currentTime;
+            },
+            ended() {
+                this.isPlaying = false;
+                this.songIndex++;
+                if (this.songList.length === this.songIndex) this.songIndex = 0;
+                this.currentSong = this.songList[this.songIndex];
+                this.$nextTick(() => {
+                    this.play();
+                })
+            },
+            play() {
+                const audio = this.$refs.audio;
+                if (this.isPlaying) {
+                    this.$refs.rotate.style.animationPlayState = 'paused';
+                    audio.pause();
+                    this.isPlaying = false;
+                } else {
+                    audio.play();
+                    this.$refs.rotate.style.animationPlayState = 'running';
+                    this.isPlaying = true;
+                }
+            },
+            next() {
+                if (this.songIndex === this.songList.length - 1) this.songIndex = -1;
+                this.songIndex++;
+                this.currentSong = this.songList[this.songIndex];
+                this.isPlaying = false;
+                this.percent = 0;
+                this.$nextTick(() => {
+                    this.play();
+                })
+            },
+            last() {
+                if (this.songIndex === 0) this.songIndex = this.songList.length;
+                this.songIndex--;
+                this.percent = 0;
+                this.currentSong = this.songList[this.songIndex];
+                this.isPlaying = false;
+                this.$nextTick(() => {
+                    this.play();
+                })
+            },
+            rangeChange() {
+                this.$refs.audio.currentTime = this.percent;
+            },
+            voiceCtrl(){
+                this.voice == 0 ? this.voice = 100 : this.voice = 0;
+            },
+            refactoringLyrics(lyrics){
+                if (lyrics == null) {
+                    return [{time: 0, text: '此歌曲暂无歌词~'}]
+                }
+                let lyricsArr = lyrics.split('[');
+                lyricsArr.shift();
+                lyricsArr.forEach(function(item, index) {
+                    let obj = {
+                        time: '',
+                        text: ''
+                    };
+                    obj.time = item.slice(1, 6).split(':');
+                    obj.time = parseInt(obj.time[0]) * 60 + parseInt(obj.time[1]);
+                    obj.text = item.slice(9);
+                    lyricsArr[index] = obj;
+                });
+                return lyricsArr;
+            },
+            changeColor(){
+                let self = this;
+                let colorArr = [];
+                this.$refs.songImg.onload = function() {
+                    colorArr = colorThief.getPalette(self.$refs.songImg) || [];
+                    self.countColor(colorArr);
+                }
+            },
+            countColor(colorArr){
+                let tampColorArr = [];
+                colorArr.forEach((item) => {
+                    for (let i in item) {
+                        tampColorArr.push(255 - item[i])
+                    }
+                });
+                let finalColor = parseInt(tampColorArr.reduce((a, b) => {
+                        return a + b
+                    }) / colorArr.length / 3);
+
+                let play = document.getElementsByClassName('play')[0];
+                if (parseInt(255 / finalColor) > 2) {
+                    //change color style
+                    // play.setAttribute('class', 'play black-play');
+                    //next.setAttribute('class','next black-next' )
+                }
+            },
+        },
+        created() {
+            this.currentSong = this.songList[this.songIndex];
+            this.currentLyrics = this.refactoringLyrics(this.currentSong.lyrics);
+        },
+        mounted() {
+            this.changeColor();
+            this.$refs.voiceRange.style.background = `linear-gradient(to right, #eb7470, #eb7470 ${this.voice}%, white ${this.voice}%, white)`;
+            this.$refs.range.style.background = `linear-gradient(to right, #eb7470, #eb7470 ${(this.percent / this.songDuration) * 100}%, white ${(this.percent / this.songDuration) * 100}%, white)`;
+            this.$nextTick(() => {
+                this.play();
+            })
+        },
+        filters: {
+            date(value) {
+                if (!value)return '00:00';
+                let min, sed;
+                parseInt(value / 60) > 9 ? min = parseInt(value / 60) : min = '0' + parseInt(value / 60);
+                (value % 60).toFixed(0) > 9 ? sed = (value % 60).toFixed(0) : sed = '0' + (value % 60).toFixed(0);
+                return `${min}:${sed}`;
+            }
+        },
+        watch: {
+            percent() {
+                this.$refs.range.style.background = `linear-gradient(to right, #eb7470, #eb7470 ${(this.percent / this.songDuration) * 100}%, white ${(this.percent / this.songDuration) * 100}%, white)`;
+            },
+            currentRowIndex() {
+                this.$refs.lyrics.scrollTop = this.currentRowIndex * 34.4;
+            },
+            voice() {
+                this.$refs.audio.volume = this.voice / 100;
+                this.$refs.voiceRange.style.background = `linear-gradient(to right, #eb7470, #eb7470 ${this.voice}%, white ${this.voice}%, white)`;
+            },
+            currentSong: {
+                handler() {
+                    this.percent = 0;
+                    this.currentLyrics = this.refactoringLyrics(this.currentSong.lyrics);
+                },
+                deep: true
+            }
+        },
+    });
+</script>
+</html>
