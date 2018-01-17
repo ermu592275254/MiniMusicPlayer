@@ -1,0 +1,8 @@
+.DS_Store
+node_modules/
+dist/
+local-data/
+npm-debug.log
+.idea/
+npm-debug.log.*
+Mobile-h5-dev-new-postSale*.zip
