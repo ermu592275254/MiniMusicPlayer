@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-    <title>Document</title>
+    <title>MiniMusicPlayer</title>
     <style>
         body {
             font-family: sans-serif;
@@ -739,7 +739,7 @@
                 this.openFun();
             },
             search(value){
-                let url = `http://api.xiami.com/web?v=2.0&app_key=1&key=${value}&page=1&limit=50&callback=callBack&r=search/songs`;
+                let url = `https://api.xiami.com/web?v=2.0&app_key=1&key=${value}&page=1&limit=50&callback=callBack&r=search/songs`;
                 this.http(url);
             },
             http(url){
