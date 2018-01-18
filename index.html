@@ -8,7 +8,9 @@
         body {
             font-family: sans-serif;
         }
-
+        input,button{
+            outline: none;
+        }
         .main {
             position: fixed;
             top: 50%;
@@ -33,6 +35,16 @@
             background-size: cover;
             filter: blur(20px);
             z-index: -1;
+        }
+        .open-search{
+            position: absolute;
+            top:20px;
+            left:20px;
+            font-size: 18px;
+            background-color: transparent;
+            border: none;
+            color: #fff;
+            outline: none;
         }
 
         .disc {
@@ -434,42 +446,202 @@
             border: solid 3px #fff;
             box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
         }
+        .menu-show{
+            border: none;
+            background-color: transparent;
+            font-size: 20px;
+            color: #fff;
+        }
+        .song-list-box{
+            position: absolute;
+            bottom: 0;
+            right:0;
+            width: 40%;
+            height: 70%;
+            background-color: #000;
+            /*opacity: .8;*/
+        }
+        .song-list{
+            height: calc(90%);
+            overflow: scroll;
+            border: 1px solid #fff;
+        }
+        .song-list::-webkit-scrollbar{
+            display: none;
+        }
+        .song-list-item{
+            display: block;
+            line-height: 35px;
+            border-bottom: solid 1px #999;
+            color: #fff;
+        }
+        .c-red{
+            color: #ff6e87!important;
+        }
+        .song-list-item > span{
+            display: inline-flex;
+            padding-left: 10px;
+            max-width: 50%;
+            font-size: 18px;
+        }
+        .song-list-item > label{
+            font-size: 12px;
+            max-width: 30%;
+        }
+        .song-list-item > button{
+            float: right;
+            width: 35px;
+            height: 35px;
+            line-height: 35px;
+            font-size: 20px;
+            border: none;
+            color: #DCDCDC;
+            background-color: transparent;
+        }
+        .song-list-hidden{
+            position: absolute;
+            left: 0;
+            bottom:10px;
+            width: 100%;
+            border: none;
+            background-color: transparent;
+            color: #fff;
+            font-size: 20px;
+        }
+        .songList-leave-active,.songList-enter-active  {
+            transition: all .5s ease;
+        }
 
+        .songList-enter, .songList-leave-to {
+            transform: translateY(50%);
+            opacity: 0;
+        }
+        /*tip style*/
         .com-tip {
             position: fixed;
             top: 50%;
             left: 50%;
             padding: 0 30px;
-            margin-top: 0px;
+            margin-top: 0;
             transform: translate(-50%, -50%);
             background: rgba(55, 55, 55, .3);
             border-radius: 5px;
             color: #fff;
             font-size: 15px;
             line-height: 25px;
-            transition: margin-top .5s ease-in .1s;
+            z-index: 99;
         }
 
-        .fade-enter-active {
+        .tip-enter-active {
             transition: all .3s ease;
         }
 
-        .fade-leave-active {
+        .tip-leave-active {
             transition: all .8s ease;
         }
 
-        .fade-enter, .fade-leave-to {
+        .tip-enter, .tip-leave-to {
             margin-top: 30px;
+            opacity: 0;
+        }
+
+        /*search-box style*/
+        .search-main {
+            position: fixed;
+            top: 0;
+            width: 50%;
+            height: 100%;
+            background-color: #000;
+            opacity: .8;
+        }
+        .search-input{
+            margin: 20px;
+            padding-left: 10px;
+            width: 70%;
+            height: 30px;
+            line-height: 30px;
+            font-size: 18px;
+            border: 1px solid #000;
+            border-radius: 25px;
+            outline: none;
+        }
+        .search-btn{
+            margin:20px 0;
+            border: 1px solid #999;
+            background-color: pink;
+            line-height: 30px;
+            font-size: 18px;
+            color: #000;
+            border-radius: 5px;
+        }
+        .result-list{
+            margin: 10px auto;
+            width: 90%;
+            height: 550px;
+            overflow: scroll;
+            list-style: none;
+        }
+        .result-list::-webkit-scrollbar{
+            display: none;
+        }
+        .item{
+            height: 35px;
+            border-bottom: 1px solid #999;
+            color: #fff;
+        }
+        .overflow-h{
+            overflow: hidden;
+            text-overflow:ellipsis;
+            white-space: nowrap;
+        }
+        .song-name{
+            display: inline-block;
+            width: 30%;
+            word-spacing: inherit;
+        }
+        .singer{
+            display: inline-block;
+            width: 20%;
+            word-spacing: inherit;
+        }
+        .album{
+            display: inline-block;
+            width: 20%;
+            word-spacing: inherit;
+        }
+        .add-song,.play-song{
+            padding: 0 10px;
+            border: 1px solid #000;
+            background-color: yellow;
+            border-radius: 5px;
+            line-height: 30px;
+        }
+        .search-close{
+            position: absolute;
+            bottom: 0;
+            right: 10px;
+            font-size: 25px;
+            color: #fff;
+            background-color: transparent;
+            border: none;
+        }
+        .search-enter-active, .search-leave-active {
+            transition: all .5s ease;
+        }
+
+        .search-enter, .search-leave-to {
+            transform: translateX(-70%);
             opacity: 0;
         }
     </style>
 </head>
 <body>
 <div id="app" class="main">
-    <div class="bg-blur" :style="`background-image:url(${currentSong.img})`"></div>
+    <div class="bg-blur" :style="`background-image:url(${currentSong.album_logo})`"></div>
+    <button class="open-search" @click="openSearch" v-if="!showSearch">→</button>
     <div class="disc">
-        <div class="song-img" :style="`background-image:url(${currentSong.img})`" ref="rotate"></div>
-        <img :src="currentSong.img" alt="" ref="songImg" style="visibility: hidden">
+        <div class="song-img" :style="`background-image:url(${currentSong.album_logo})`" ref="rotate"></div>
+        <img :src="currentSong.album_logo" alt="" ref="songImg" style="visibility: hidden">
     </div>
     <div class="ctrl-box">
         <div class="last" @click="last"></div>
@@ -486,8 +658,8 @@
         </div>
     </div>
     <div class="right-part">
-        <p class="title">{{currentSong.title}}</p>
-        <p class="artist">{{currentSong.artist}}</p>
+        <p class="title">{{currentSong.song_name}}</p>
+        <p class="artist">{{currentSong.artist_name}}</p>
         <div class="lyrics" ref="lyrics">
             <p v-for="(item,index) in currentLyrics" :class="{'pink': showPink(item,index)}">{{item.text}}</p>
         </div>
@@ -496,26 +668,111 @@
         <span class="timer">{{percent | date}}</span>
         <input type="range" ref="range" v-model="percent" :max="songDuration" min="0" @click="rangeChange"/>
         <span class="timer">{{songDuration | date}}</span>
+        <button class="menu-show" @click="menuCtrl">三</button>
     </div>
-    <audio ref="audio" :src="currentSong.url" @play="ready" @error="error" @timeupdate="updateTime"
+    <audio ref="audio" :src="currentSong.listen_file" @play="ready" @error="error" @timeupdate="updateTime"
            @ended="ended"></audio>
-    <transition name="fade">
-        <com-tip class="com-tip" :is-show="showTip"></com-tip>
+    <transition name="songList">
+        <div class="song-list-box" v-if="showMenu">
+            <div class="song-list">
+                <a class="song-list-item" v-for="(item,index) in songList" :class="{'c-red': songIndex === index}" @click="playExistSong(index)">
+                    <span class="overflow-h">{{item.song_name}}</span>
+                    <label class="overflow-h">-{{item.artist_name}}</label>
+                    <button @click.stop="deleteSong(index)">x</button>
+                </a>
+            </div>
+            <button class="song-list-hidden" @click="menuCtrl">↓</button>
+        </div>
     </transition>
+    <transition name="tip">
+        <com-tip class="com-tip" :is-show.async="showTip" :text="tipText"></com-tip>
+    </transition>
+    <search-box :is-show="showSearch" :open-fun="openSearch" @push-song="pushNewSong" @play-song="playSong"></search-box>
 </div>
+<template id="search-box">
+    <transition name="search">
+        <div v-if="isShow" class="search-main">
+            <input type="text" class="search-input" v-model="searchValue" placeholder="请输入歌曲/歌手">
+            <button class="search-btn" @click="search(searchValue)">查询</button>
+            <ul class="result-list">
+                <li class="item" v-for="item in resultList">
+                    <span class="overflow-h song-name">{{item.song_name}}</span>
+                    <span class="overflow-h singer">{{item.artist_name}}</span>
+                    <span class="overflow-h album">{{item.album_name}}</span>
+                    <button class="add-song" title="点击添加到播放列表" @click="pushInList(item)">+</button>
+                    <button class="play-song" title="点击播放" @click="playNow(item)">播放</button>
+                </li>
+            </ul>
+            <button class="search-close" @click="close">←</button>
+        </div>
+    </transition>
+</template>
 </body>
-<script src="https://cdn.bootcss.com/color-thief/2.0.1/color-thief.min.js"></script>
+<!--<script src="https://cdn.bootcss.com/color-thief/2.0.1/color-thief.min.js"></script>-->
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script>
-    var colorThief = new ColorThief();
+//    const colorThief = new ColorThief();
+    var callBack = function(result) {
+        console.log(result);
+        EventBus.$emit('callBack',result);
+    };
+    var EventBus = new Vue();
     var tip = {
-        props: ['isShow'],
-        template: '<div v-if="isShow">o(>﹏<)o~无法获取歌曲信息</div>'
+        props: ['isShow','text'],
+        template: '<div v-if="isShow">{{text}}</div>'
+    };
+    var searchBox = {
+        template: '#search-box',
+        props: {
+            isShow: Boolean,
+            openFun:Function
+        },
+        data(){
+            return {
+                resultList:[],
+                searchValue:'',
+            }
+        },
+        methods:{
+            close() {
+                this.openFun();
+            },
+            search(value){
+                let url = `http://api.xiami.com/web?v=2.0&app_key=1&key=${value}&page=1&limit=50&callback=callBack&r=search/songs`;
+                this.http(url);
+            },
+            http(url){
+                var script = document.createElement('script');
+                script.type = 'text/javascript';
+                script.src = url;
+                document.head.appendChild(script);
+//                script.onload(function() {
+//                    document.head.removeChild(script);
+//                })
+            },
+            pushInList(item){
+                console.log('init push')
+                this.$emit('push-song',item);
+            },
+            playNow(item){
+                this.$emit('play-song',item);
+            }
+        },
+        mounted(){
+            let self = this;
+            EventBus.$on('callBack', function(res) {
+                if(res && res.data) {
+                    self.resultList = res.data.songs;
+                }
+            })
+        }
     };
     new Vue({
         el: '#app',
         components: {
-            'com-tip': tip
+            'com-tip': tip,
+            'search-box': searchBox
         },
         data() {
             return {
@@ -524,23 +781,26 @@
                 songIndex: 0,
                 percent: 0,
                 songDuration: 0,
-                voice: 100,
+                voice:100,
                 keyDowm: false,
                 currentRowIndex: 0,
                 showTip: false,
+                showSearch: false,
+                showMenu: false,
+                tipText: 'o(>﹏<)o~无法获取歌曲信息',
                 bgImg: 'http://img.xiami.net/images/album/img8/451408/563461507451408.jpg',
                 songList: [{
-                    title: 'aLIEz',
-                    artist: '澤野弘之',
-                    img: 'http://pic.xiami.net/images/album/img31/59831/7064167921410329023_1.jpg',
-                    url: 'http://m128.xiami.net/831/59831/706416792/1773377276_15743273_l.mp3?auth_key=1516762800-0-0-ae075e2e74e8a6b47193922d65d9d60e',
-                    lyrics: null
+                    song_name: 'aLIEz',
+                    artist_name: '澤野弘之',
+                    album_logo: 'http://pic.xiami.net/images/album/img31/59831/7064167921410329023_1.jpg',
+                    listen_file: 'http://m128.xiami.net/831/59831/706416792/1773377276_15743273_l.mp3?auth_key=1516762800-0-0-ae075e2e74e8a6b47193922d65d9d60e',
+                    lyric: null
                 }, {
-                    title: 'creep',
-                    artist: 'Radiohead',
-                    img: 'http://img.xiami.net/images/album/img54/10454/1694751418202640.jpg',
-                    url: 'http://m128.xiami.net/454/10454/56346/1079377_52077_l.mp3?auth_key=1516762800-0-0-87f30ce981385e09630d705e7be76a6c',
-                    lyrics: `[00:20.00]When you were here before
+                    song_name: 'creep',
+                    artist_name: 'Radiohead',
+                    album_logo: 'http://img.xiami.net/images/album/img54/10454/1694751418202640.jpg',
+                    listen_file: 'http://m128.xiami.net/454/10454/56346/1079377_52077_l.mp3?auth_key=1516762800-0-0-87f30ce981385e09630d705e7be76a6c',
+                    lyric: `[00:20.00]When you were here before
                     [00:25.00]Couldn't look you in the eye
                 [00:30.00]You're just like an angel
                 [00:35.00]Your skin makes me cry
@@ -574,19 +834,19 @@
                 [03:42.00]I don't belong here.
                 [03:47.00]I don't belong here.`
                 }, {
-                    title: 'All I Need',
-                    artist: 'Within Temptation',
-                    img: 'http://img.xiami.net/images/album/img92/24292/3538581257326025.jpg',
-                    url: 'http://m128.xiami.net/292/24292/353858/1769199707_2920725_l.mp3?auth_key=1516762800-0-0-024fb8daab0498328e706623b9f64d1f',
-                    lyrics: null
+                    song_name: 'All I Need',
+                    artist_name: 'Within Temptation',
+                    album_logo: 'http://img.xiami.net/images/album/img92/24292/3538581257326025.jpg',
+                    listen_file: 'http://m128.xiami.net/292/24292/353858/1769199707_2920725_l.mp3?auth_key=1516762800-0-0-024fb8daab0498328e706623b9f64d1f',
+                    lyric: null
                 }, {
-                    title: 'Smoke on the Water',
-                    artist: 'Deep Purple',
-                    img: 'http://img.xiami.net/images/album/img41/10141/517381371635791.jpg',
-                    url: 'http://m128.xiami.net/1/141/10141/51738/1019071_296703_l.mp3?auth_key=1516762800-0-0-67e54b66643afe07bf82af588f8c570f',
-                    lyrics: null
+                    song_name: 'Smoke on the Water',
+                    artist_name: 'Deep Purple',
+                    album_logo: 'http://img.xiami.net/images/album/img41/10141/517381371635791.jpg',
+                    listen_file: 'http://m128.xiami.net/1/141/10141/51738/1019071_296703_l.mp3?auth_key=1516762800-0-0-67e54b66643afe07bf82af588f8c570f',
+                    lyric: null
                 }],
-                currentLyrics: [],
+                currentLyric: [],
             }
         },
         methods: {
@@ -594,16 +854,61 @@
                 this.songDuration = event.target.duration || '0';
             },
             showPink(item, index){
-                if (this.percent >= item.time && this.currentLyrics[index + 1] && this.percent < this.currentLyrics[index + 1].time) {
+                if (this.percent >= item.time && this.currentLyric[index + 1] && this.percent < this.currentLyric[index + 1].time) {
                     this.currentRowIndex = index;
                     return true;
+                }
+            },
+            openSearch(){
+                this.showSearch = !this.showSearch;
+            },
+            menuCtrl(){
+                this.showMenu = !this.showMenu;
+            },
+            playExistSong(index){
+                this.songIndex = index;
+                this.currentSong = this.songList[index];
+                this.isPlaying = false;
+                this.percent = 0;
+                this.$nextTick(() => {
+                    this.play();
+                })
+            },
+            deleteSong(index){
+                this.songList.splice(index,1);
+            },
+            alreadyExist(item){
+                for(let i in this.songList){
+                    if(this.songList[i].song_id === item.song_id) {
+                        return i;
+                    }
+                }
+                return false;
+            },
+            playSong(item){
+                let temp =this.alreadyExist(item);
+                if(temp === false) {
+                    this.songList.splice(this.songIndex +1,0,item);
+                    console.log(this.songList);
+                    this.next();
+                } else {
+                    this.playExistSong(temp);
+                }
+            },
+            pushNewSong(item){
+                let temp =this.alreadyExist(item);
+                if(temp === false) {
+                    this.songList.push(item);
+                } else {
+                    this.openTip('此歌曲已存在~');
                 }
             },
             error() {
                 this.openTip();
                 this.$refs.rotate.style.animationPlayState = 'paused';
             },
-            openTip(){
+            openTip(value){
+                this.tipText = value || 'o(>﹏<)o~无法获取歌曲信息';
                 this.showTip = true;
                 setTimeout(() => {
                     this.showTip = false;
@@ -660,11 +965,11 @@
             voiceCtrl(){
                 this.voice == 0 ? this.voice = 100 : this.voice = 0;
             },
-            refactoringLyrics(lyrics){
-                if (lyrics == null) {
+            refactoringLyrics(lyric){
+                if (lyric == null) {
                     return [{time: 0, text: '此歌曲暂无歌词~'}]
                 }
-                let lyricsArr = lyrics.split('[');
+                let lyricsArr = lyric.split('[');
                 lyricsArr.shift();
                 lyricsArr.forEach(function(item, index) {
                     let obj = {
@@ -682,8 +987,9 @@
                 let self = this;
                 let colorArr = [];
                 this.$refs.songImg.onload = function() {
-                    colorArr = colorThief.getPalette(self.$refs.songImg) || [];
-                    self.countColor(colorArr);
+                    // todo 根据背景图片改变按钮颜色
+//                    colorArr = colorThief.getPalette(self.$refs.songImg) || [];
+//                    self.countColor(colorArr);
                 }
             },
             countColor(colorArr){
@@ -706,8 +1012,13 @@
             },
         },
         created() {
+            let tempArr = JSON.parse(localStorage.getItem('songList'));
+            console.log(tempArr);
+            if(tempArr && tempArr.length >0){
+                this.songList = tempArr;
+            }
             this.currentSong = this.songList[this.songIndex];
-            this.currentLyrics = this.refactoringLyrics(this.currentSong.lyrics);
+            this.currentLyrics = this.refactoringLyrics(this.currentSong.lyric);
         },
         mounted() {
             this.changeColor();
@@ -740,11 +1051,18 @@
             currentSong: {
                 handler() {
                     this.percent = 0;
-                    this.currentLyrics = this.refactoringLyrics(this.currentSong.lyrics);
+                    console.log(this.currentSong);
+                    this.currentLyrics = this.refactoringLyrics(this.currentSong.lyric);
+                },
+                deep: true
+            },
+            songList:{
+                handler() {
+                    localStorage.setItem('songList', JSON.stringify(this.songList));
                 },
                 deep: true
             }
-        },
+        }
     });
 </script>
 </html>
