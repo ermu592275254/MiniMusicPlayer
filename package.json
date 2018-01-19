@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "dev": "node request.js"
+  },
   "dependencies": {
     "request": "^2.83.0"
   }
