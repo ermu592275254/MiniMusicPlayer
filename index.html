@@ -8,9 +8,11 @@
         body {
             font-family: sans-serif;
         }
-        input,button{
+
+        input, button {
             outline: none;
         }
+
         .main {
             position: fixed;
             top: 50%;
@@ -36,10 +38,11 @@
             filter: blur(20px);
             z-index: -1;
         }
-        .open-search{
+
+        .open-search {
             position: absolute;
-            top:20px;
-            left:20px;
+            top: 20px;
+            left: 20px;
             font-size: 18px;
             background-color: transparent;
             border: none;
@@ -446,49 +449,58 @@
             border: solid 3px #fff;
             box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
         }
-        .menu-show{
+
+        .menu-show {
             border: none;
             background-color: transparent;
             font-size: 20px;
             color: #fff;
         }
-        .song-list-box{
+
+        .song-list-box {
             position: absolute;
             bottom: 0;
-            right:0;
+            right: 0;
             width: 40%;
             height: 70%;
             background-color: #000;
             /*opacity: .8;*/
         }
-        .song-list{
+
+        .song-list {
             height: calc(90%);
             overflow: scroll;
             border: 1px solid #fff;
         }
-        .song-list::-webkit-scrollbar{
+
+        .song-list::-webkit-scrollbar {
             display: none;
         }
-        .song-list-item{
+
+        .song-list-item {
             display: block;
             line-height: 35px;
             border-bottom: solid 1px #999;
             color: #fff;
         }
-        .c-red{
-            color: #ff6e87!important;
+
+        .c-red {
+            color: #ff6e87 !important;
         }
-        .song-list-item > span{
+
+        .song-list-item > span {
             display: inline-flex;
             padding-left: 10px;
             max-width: 50%;
             font-size: 18px;
         }
-        .song-list-item > label{
+
+        .song-list-item > label {
             font-size: 12px;
             max-width: 30%;
         }
-        .song-list-item > button{
+
+        .song-list-item > button {
             float: right;
             width: 35px;
             height: 35px;
@@ -498,17 +510,19 @@
             color: #DCDCDC;
             background-color: transparent;
         }
-        .song-list-hidden{
+
+        .song-list-hidden {
             position: absolute;
             left: 0;
-            bottom:10px;
+            bottom: 10px;
             width: 100%;
             border: none;
             background-color: transparent;
             color: #fff;
             font-size: 20px;
         }
-        .songList-leave-active,.songList-enter-active  {
+
+        .songList-leave-active, .songList-enter-active {
             transition: all .5s ease;
         }
 
@@ -516,6 +530,7 @@
             transform: translateY(50%);
             opacity: 0;
         }
+
         /*tip style*/
         .com-tip {
             position: fixed;
@@ -554,7 +569,8 @@
             background-color: #000;
             opacity: .8;
         }
-        .search-input{
+
+        .search-input {
             margin: 20px;
             padding-left: 10px;
             width: 70%;
@@ -565,8 +581,9 @@
             border-radius: 25px;
             outline: none;
         }
-        .search-btn{
-            margin:20px 0;
+
+        .search-btn {
+            margin: 20px 0;
             border: 1px solid #999;
             background-color: pink;
             line-height: 30px;
@@ -574,49 +591,58 @@
             color: #000;
             border-radius: 5px;
         }
-        .result-list{
+
+        .result-list {
             margin: 10px auto;
             width: 90%;
             height: 550px;
             overflow: scroll;
             list-style: none;
         }
-        .result-list::-webkit-scrollbar{
+
+        .result-list::-webkit-scrollbar {
             display: none;
         }
-        .item{
+
+        .item {
             height: 35px;
             border-bottom: 1px solid #999;
             color: #fff;
         }
-        .overflow-h{
+
+        .overflow-h {
             overflow: hidden;
-            text-overflow:ellipsis;
+            text-overflow: ellipsis;
             white-space: nowrap;
         }
-        .song-name{
+
+        .song-name {
             display: inline-block;
             width: 30%;
             word-spacing: inherit;
         }
-        .singer{
+
+        .singer {
             display: inline-block;
             width: 20%;
             word-spacing: inherit;
         }
-        .album{
+
+        .album {
             display: inline-block;
             width: 20%;
             word-spacing: inherit;
         }
-        .add-song,.play-song{
+
+        .add-song, .play-song {
             padding: 0 10px;
             border: 1px solid #000;
             background-color: yellow;
             border-radius: 5px;
             line-height: 30px;
         }
-        .search-close{
+
+        .search-close {
             position: absolute;
             bottom: 0;
             right: 10px;
@@ -625,6 +651,7 @@
             background-color: transparent;
             border: none;
         }
+
         .search-enter-active, .search-leave-active {
             transition: all .5s ease;
         }
@@ -675,7 +702,8 @@
     <transition name="songList">
         <div class="song-list-box" v-if="showMenu">
             <div class="song-list">
-                <a class="song-list-item" v-for="(item,index) in songList" :class="{'c-red': songIndex === index}" @click="playExistSong(index)">
+                <a class="song-list-item" v-for="(item,index) in songList" :class="{'c-red': songIndex === index}"
+                   @click="playExistSong(index)">
                     <span class="overflow-h">{{item.song_name}}</span>
                     <label class="overflow-h">-{{item.artist_name}}</label>
                     <button @click.stop="deleteSong(index)">x</button>
@@ -687,7 +715,8 @@
     <transition name="tip">
         <com-tip class="com-tip" :is-show.async="showTip" :text="tipText"></com-tip>
     </transition>
-    <search-box :is-show="showSearch" :open-fun="openSearch" @push-song="pushNewSong" @play-song="playSong"></search-box>
+    <search-box :is-show="showSearch" :open-fun="openSearch" @push-song="pushNewSong"
+                @play-song="playSong"></search-box>
 </div>
 <template id="search-box">
     <transition name="search">
@@ -712,57 +741,81 @@
 <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script>
-//    const colorThief = new ColorThief();
+    //    const colorThief = new ColorThief();
+    function http(url) {
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = url;
+        let destroy = function() {
+            console.log('script is onload');
+            document.head.removeChild(script);
+        }
+//        script.addEventListener("load", destroy, false);
+        document.head.appendChild(script);
+    }
     var callBack = function(result) {
         console.log(result);
-        EventBus.$emit('callBack',result);
+        EventBus.$emit('callBack', result);
     };
     var EventBus = new Vue();
     var tip = {
-        props: ['isShow','text'],
+        props: ['isShow', 'text'],
         template: '<div v-if="isShow">{{text}}</div>'
     };
     var searchBox = {
         template: '#search-box',
         props: {
             isShow: Boolean,
-            openFun:Function
+            openFun: Function
         },
         data(){
             return {
-                resultList:[],
-                searchValue:'',
+                resultList: [],
+                searchValue: '',
             }
         },
-        methods:{
+        methods: {
             close() {
                 this.openFun();
             },
             search(value){
-                let url = `https://api.xiami.com/web?v=2.0&app_key=1&key=${value}&page=1&limit=50&callback=callBack&r=search/songs`;
-                this.http(url);
+//                let url = `https://api.xiami.com/web?v=2.0&app_key=1&key=${value}&page=1&limit=50&callback=callBack&r=search/songs`;
+//                this.http(url);
+                $.ajax({
+                    url: `http://localhost:3000/song?v=2.0&app_key=1&key=${value}&page=1&limit=50&callback=callBack&r=search/songs`,
+                    dataType: 'jsonp',
+                    data: '',
+                    jsonp: 'callback1',
+                    success: function(data) {
+                        if (res && res.data) {
+                            self.resultList = res.data.songs;
+                        }
+                    }
+                })
             },
-            http(url){
+            http(url) {
                 var script = document.createElement('script');
                 script.type = 'text/javascript';
                 script.src = url;
+                let destroy = function() {
+                    console.log('script is onload');
+                    document.head.removeChild(script);
+                }
+                //script.addEventListener("load", destroy, false);
                 document.head.appendChild(script);
-//                script.onload(function() {
-//                    document.head.removeChild(script);
-//                })
             },
             pushInList(item){
                 console.log('init push')
-                this.$emit('push-song',item);
+                this.$emit('push-song', item);
             },
             playNow(item){
-                this.$emit('play-song',item);
+                this.$emit('play-song', item);
             }
         },
         mounted(){
             let self = this;
             EventBus.$on('callBack', function(res) {
-                if(res && res.data) {
+                if (res && res.data) {
                     self.resultList = res.data.songs;
                 }
             })
@@ -781,12 +834,13 @@
                 songIndex: 0,
                 percent: 0,
                 songDuration: 0,
-                voice:100,
+                voice: 100,
                 keyDowm: false,
                 currentRowIndex: 0,
                 showTip: false,
                 showSearch: false,
                 showMenu: false,
+                currentLyrics: [{time: 0, text: '此歌曲暂无歌词~'}],
                 tipText: 'o(>﹏<)o~无法获取歌曲信息',
                 bgImg: 'http://img.xiami.net/images/album/img8/451408/563461507451408.jpg',
                 songList: [{
@@ -846,7 +900,6 @@
                     listen_file: 'http://m128.xiami.net/1/141/10141/51738/1019071_296703_l.mp3?auth_key=1516762800-0-0-67e54b66643afe07bf82af588f8c570f',
                     lyric: null
                 }],
-                currentLyric: [],
             }
         },
         methods: {
@@ -854,7 +907,8 @@
                 this.songDuration = event.target.duration || '0';
             },
             showPink(item, index){
-                if (this.percent >= item.time && this.currentLyric[index + 1] && this.percent < this.currentLyric[index + 1].time) {
+                let last = item.time,next = this.currentLyrics[index +1]?this.currentLyrics[index + 1].time:999999;
+                if(this.percent>=last && this.percent < next){
                     this.currentRowIndex = index;
                     return true;
                 }
@@ -875,20 +929,20 @@
                 })
             },
             deleteSong(index){
-                this.songList.splice(index,1);
+                this.songList.splice(index, 1);
             },
             alreadyExist(item){
-                for(let i in this.songList){
-                    if(this.songList[i].song_id === item.song_id) {
+                for (let i in this.songList) {
+                    if (this.songList[i].song_id === item.song_id) {
                         return i;
                     }
                 }
                 return false;
             },
             playSong(item){
-                let temp =this.alreadyExist(item);
-                if(temp === false) {
-                    this.songList.splice(this.songIndex +1,0,item);
+                let temp = this.alreadyExist(item);
+                if (temp === false) {
+                    this.songList.splice(this.songIndex + 1, 0, item);
                     console.log(this.songList);
                     this.next();
                 } else {
@@ -896,8 +950,8 @@
                 }
             },
             pushNewSong(item){
-                let temp =this.alreadyExist(item);
-                if(temp === false) {
+                let temp = this.alreadyExist(item);
+                if (temp === false) {
                     this.songList.push(item);
                 } else {
                     this.openTip('此歌曲已存在~');
@@ -965,23 +1019,52 @@
             voiceCtrl(){
                 this.voice == 0 ? this.voice = 100 : this.voice = 0;
             },
+            getLyric(url){
+                let self = this;
+                if(!url){
+                    self.currentLyrics = [{time: 0, text: '此歌曲暂无歌词~'}];
+                    return;
+                };
+                $.ajax({
+                    type: 'GET',
+                    dataType: 'text',
+                    url: `http://localhost:3000/lyric?url=${url}`,
+                    success: function(data) {
+                        console.log(data);
+                        self.refactoringLyrics(data);
+                    },
+                    error: function() {
+                        self.currentLyrics = [{time: 0, text: '此歌曲暂无歌词~'}];
+                    }
+                })
+            },
             refactoringLyrics(lyric){
-                if (lyric == null) {
-                    return [{time: 0, text: '此歌曲暂无歌词~'}]
-                }
-                let lyricsArr = lyric.split('[');
-                lyricsArr.shift();
-                lyricsArr.forEach(function(item, index) {
-                    let obj = {
-                        time: '',
-                        text: ''
-                    };
-                    obj.time = item.slice(1, 6).split(':');
-                    obj.time = parseInt(obj.time[0]) * 60 + parseInt(obj.time[1]);
-                    obj.text = item.slice(9);
-                    lyricsArr[index] = obj;
+                let text = lyric.split('[offset:0]')[1];
+                let textArr = text.split('\n');
+                let lyricsArr = [],translate=[];
+                textArr.forEach((item,index)=>{
+                    let time = 0,text='';
+                    if(item.indexOf('[x-trans]') > -1){
+                        translate.push(item.split('[x-trans]')[1])
+                    } else if(item.trim() !=''){
+                        time = item.slice(1, 6).split(':');
+                        time = parseInt(time[0]) * 60 + parseInt(time[1]);
+                        text = item.slice(11);
+                        let arr = text.split('>');
+                        let str = arr.reduce((a,b)=>{
+                            return a.split('<')[0] + b.split('<')[0]
+                        });
+                        let obj = {
+                            time: time,
+                            text: str
+                        };
+                        lyricsArr.push(obj);
+                    }
                 });
-                return lyricsArr;
+                for(let i in translate){
+                    lyricsArr[i].text = lyricsArr[i].text + '\n' + translate[i];
+                }
+                this.currentLyrics =  lyricsArr;
             },
             changeColor(){
                 let self = this;
@@ -1014,11 +1097,11 @@
         created() {
             let tempArr = JSON.parse(localStorage.getItem('songList'));
             console.log(tempArr);
-            if(tempArr && tempArr.length >0){
+            if (tempArr && tempArr.length > 0) {
                 this.songList = tempArr;
             }
             this.currentSong = this.songList[this.songIndex];
-            this.currentLyrics = this.refactoringLyrics(this.currentSong.lyric);
+            this.currentLyrics = this.getLyric(this.currentSong.lyric);
         },
         mounted() {
             this.changeColor();
@@ -1042,7 +1125,8 @@
                 this.$refs.range.style.background = `linear-gradient(to right, #eb7470, #eb7470 ${(this.percent / this.songDuration) * 100}%, white ${(this.percent / this.songDuration) * 100}%, white)`;
             },
             currentRowIndex() {
-                this.$refs.lyrics.scrollTop = this.currentRowIndex * 34.4;
+                console.log(this.$refs.lyrics.scrollHeight);
+                this.$refs.lyrics.scrollTop = this.currentRowIndex * (this.$refs.lyrics.scrollHeight/this.currentLyrics.length);
             },
             voice() {
                 this.$refs.audio.volume = this.voice / 100;
@@ -1052,11 +1136,12 @@
                 handler() {
                     this.percent = 0;
                     console.log(this.currentSong);
-                    this.currentLyrics = this.refactoringLyrics(this.currentSong.lyric);
+                    this.getLyric(this.currentSong.lyric);
+//                    this.currentLyrics = this.getLyric(this.currentSong.lyric);
                 },
                 deep: true
             },
-            songList:{
+            songList: {
                 handler() {
                     localStorage.setItem('songList', JSON.stringify(this.songList));
                 },
