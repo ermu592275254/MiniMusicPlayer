@@ -58,7 +58,6 @@
             height: 300px;
             border-radius: 300px;
             transform: rotate(45deg);
-            /*background-color: #5e5e5e;*/
             background-image: radial-gradient(5em 30em ellipse, #fff, #000);
             border: 2px solid #131313;
             box-shadow: 0 0 0 10px #343935;
@@ -100,6 +99,7 @@
             right: 0;
             width: 50%;
             height: 600px;
+            overflow: hidden;
         }
 
         .title {
@@ -116,9 +116,11 @@
 
         .lyrics {
             margin-top: 20px;
+            padding-right: 25px;
+            width: 100%;
             height: 400px;
             line-height: 35px;
-            overflow: scroll;
+            overflow-y: scroll;
             color: #fff;
             white-space: pre-line;
             text-align: center;
@@ -137,7 +139,7 @@
             margin: 15% 0 0 10%;
             padding-left: 10px;
             vertical-align: middle;
-            background-color: rgba(0,0,0,.3);
+            background-color: rgba(0, 0, 0, .3);
             border-radius: 10px;
         }
 
@@ -408,8 +410,7 @@
 
         .voice {
             float: right;
-            margin-right: 20px;
-            margin-top: 18px;
+            margin: 16px 20px 0 0 ;
             width: 100px !important;
         }
 
@@ -427,16 +428,27 @@
         input[type=range] {
             -webkit-appearance: none;
             width: 80%;
+            height: 8px;
             border-radius: 10px;
+            background-color: #fff;
         }
 
-        input[type=range]::-webkit-slider-thumb {
+        /*input[type=range]::-moz-range-progress {*/
+        /*height: 0;*/
+        /*}*/
+        input[type=range]::-webkit-slider-thumb, input[type=range]::-moz-range-thumb {
             -webkit-appearance: none;
         }
 
         input[type=range]::-webkit-slider-runnable-track {
             height: 8px;
             border-radius: 20px;
+        }
+
+        input[type=range]::-moz-range-track {
+            height: 8px;
+            border-radius: 20px;
+            background-color: transparent;
         }
 
         input[type=range]:focus {
@@ -448,6 +460,17 @@
             margin-top: -3px;
             height: 14px;
             width: 14px;
+            background: #eb7470;
+            border-radius: 50%;
+            border: solid 3px #fff;
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+        }
+
+        input[type=range]::-moz-range-thumb {
+            -webkit-appearance: none;
+            margin-top: -3px;
+            height: 10px;
+            width: 10px;
             background: #eb7470;
             border-radius: 50%;
             border: solid 3px #fff;
@@ -468,12 +491,15 @@
             width: 40%;
             height: 70%;
             background-color: #000;
+            overflow: hidden;
             /*opacity: .8;*/
         }
 
         .song-list {
-            height: calc(90%);
-            overflow: scroll;
+            padding-right: 15px;
+            height: 90%;
+            width: 100%;
+            overflow-y: scroll;
             border: 1px solid #fff;
         }
 
@@ -486,6 +512,7 @@
             line-height: 35px;
             border-bottom: solid 1px #999;
             color: #fff;
+            width: 100%;
         }
 
         .c-red {
@@ -494,6 +521,10 @@
 
         .song-list-item > span {
             display: inline-flex;
+            display: -webkit-inline-flex;
+            display: -ms-inline-box;
+            display: -moz-inline-box;
+            align-items: center;
             padding-left: 10px;
             max-width: 50%;
             font-size: 18px;
@@ -572,6 +603,7 @@
             height: 100%;
             background-color: #000;
             opacity: .8;
+            overflow: hidden;
         }
 
         .search-input {
@@ -600,8 +632,9 @@
             margin: 10px auto;
             width: 90%;
             height: 550px;
-            overflow: scroll;
+            overflow-y: scroll;
             list-style: none;
+            padding-right: 25px;
         }
 
         .result-list::-webkit-scrollbar {
@@ -668,11 +701,11 @@
 </head>
 <body>
 <div id="app" class="main">
-    <div class="bg-blur" :style="`background-image:url(${currentSong.album_logo})`"></div>
+    <div class="bg-blur"  :style="`background-image:url(${currentSong.album_logo})`"></div>
     <button class="open-search" @click="openSearch" v-if="!showSearch">→</button>
     <div class="disc">
         <div class="song-img" :style="`background-image:url(${currentSong.album_logo})`" ref="rotate"></div>
-        <img :src="currentSong.album_logo" alt="" ref="songImg" style="visibility: hidden">
+        <!--<img :src="currentSong.album_logo" alt="" ref="songImg" style="visibility: hidden">-->
     </div>
     <div class="ctrl-box">
         <div class="last" @click="last"></div>
@@ -725,7 +758,8 @@
 <template id="search-box">
     <transition name="search">
         <div v-if="isShow" class="search-main">
-            <input type="text" class="search-input" v-model="searchValue" placeholder="请输入歌曲/歌手" @keyup.enter="search(searchValue)">
+            <input type="text" class="search-input" v-model="searchValue" placeholder="请输入歌曲/歌手"
+                   @keyup.enter="search(searchValue)">
             <button class="search-btn" @click="search(searchValue)">查询</button>
             <ul class="result-list">
                 <li class="item" v-for="item in resultList">
@@ -858,39 +892,7 @@
                     artist_name: 'Radiohead',
                     album_logo: 'http://img.xiami.net/images/album/img54/10454/1694751418202640.jpg',
                     listen_file: 'http://m128.xiami.net/454/10454/56346/1079377_52077_l.mp3?auth_key=1516762800-0-0-87f30ce981385e09630d705e7be76a6c',
-                    lyric: `[00:20.00]When you were here before
-                    [00:25.00]Couldn't look you in the eye
-                [00:30.00]You're just like an angel
-                [00:35.00]Your skin makes me cry
-                [00:40.00]You float like a feather
-                [00:45.00]In a beautiful world
-                [00:50.00]And I wish I was special
-                [00:56.00]You're so fuckin' special
-                [01:01.00]But I'm a creep, I'm a weirdo.
-                [01:11.00]What the hell am I doing here?
-                [01:17.00]I don't belong here.
-                [01:22.00]I don't care if it hurts
-                [01:27.00]I want to have control
-                [01:32.00]I want a perfect body
-                [01:37.00]I want a perfect soul
-                [01:42.00]I want you to notice
-                [01:48.00]When I'm not around
-                [01:53.00]You're so fuckin' special
-                [01:58.00]I wish I was special
-                [02:04.00]But I'm a creep, I'm a weirdo.
-                [02:14.00]What the hell am I doing here?
-                [02:20.00]I don't belong here.
-                [02:27.00]She's running out again,
-                [02:36.00]She's running out
-                [02:42.00]She's run run run running out...
-                [03:04.00]Whatever makes you happy
-                [03:11.00]Whatever you want
-                [03:16.00]You're so fuckin' special
-                [03:21.00]I wish I was special...
-                [03:26.00]But I'm a creep, I'm a weirdo,
-                [03:37.00]What the hell am I doing here?
-                [03:42.00]I don't belong here.
-                [03:47.00]I don't belong here.`
+                    lyric: null
                 }, {
                     song_name: 'All I Need',
                     artist_name: 'Within Temptation',
@@ -911,8 +913,8 @@
                 this.songDuration = event.target.duration || '0';
             },
             showPink(item, index){
-                let last = item.time,next = this.currentLyrics[index +1]?this.currentLyrics[index + 1].time:999999;
-                if(this.percent>=last && this.percent < next){
+                let last = item.time, next = this.currentLyrics[index + 1] ? this.currentLyrics[index + 1].time : 999999;
+                if (this.percent >= last && this.percent < next) {
                     this.currentRowIndex = index;
                     return true;
                 }
@@ -1025,10 +1027,11 @@
             },
             getLyric(url){
                 let self = this;
-                if(!url){
+                if (!url) {
                     self.currentLyrics = [{time: 0, text: '此歌曲暂无歌词~'}];
                     return;
-                };
+                }
+                ;
                 $.ajax({
                     type: 'GET',
                     dataType: 'text',
@@ -1045,17 +1048,17 @@
             refactoringLyrics(lyric){
                 let text = lyric.split('[offset:0]')[1];
                 let textArr = text.split('\n');
-                let lyricsArr = [],translate=[];
-                textArr.forEach((item,index)=>{
-                    let time = 0,text='';
-                    if(item.indexOf('[x-trans]') > -1){
+                let lyricsArr = [], translate = [];
+                textArr.forEach((item, index) => {
+                    let time = 0, text = '';
+                    if (item.indexOf('[x-trans]') > -1) {
                         translate.push(item.split('[x-trans]')[1])
-                    } else if(item.trim() !=''){
+                    } else if (item.trim() != '') {
                         time = item.slice(1, 6).split(':');
                         time = parseInt(time[0]) * 60 + parseInt(time[1]);
                         text = item.slice(11);
                         let arr = text.split('>');
-                        let str = arr.reduce((a,b)=>{
+                        let str = arr.reduce((a, b) => {
                             return a.split('<')[0] + b.split('<')[0]
                         });
                         let obj = {
@@ -1065,18 +1068,18 @@
                         lyricsArr.push(obj);
                     }
                 });
-                for(let i in translate){
+                for (let i in translate) {
                     lyricsArr[i].text = lyricsArr[i].text + '\n' + translate[i];
                 }
-                this.currentLyrics =  lyricsArr;
+                this.currentLyrics = lyricsArr;
             },
             changeColor(){
                 let self = this;
                 let colorArr = [];
                 this.$refs.songImg.onload = function() {
                     // todo 根据背景图片改变按钮颜色
-//                    colorArr = colorThief.getPalette(self.$refs.songImg) || [];
-//                    self.countColor(colorArr);
+                    colorArr = colorThief.getPalette(self.$refs.songImg) || [];
+                    self.countColor(colorArr);
                 }
             },
             countColor(colorArr){
@@ -1108,11 +1111,11 @@
             this.currentLyrics = this.getLyric(this.currentSong.lyric);
         },
         mounted() {
-            this.changeColor();
+//            this.changeColor();
             this.$refs.voiceRange.style.background = `linear-gradient(to right, #eb7470, #eb7470 ${this.voice}%, white ${this.voice}%, white)`;
             this.$refs.range.style.background = `linear-gradient(to right, #eb7470, #eb7470 ${(this.percent / this.songDuration) * 100}%, white ${(this.percent / this.songDuration) * 100}%, white)`;
             this.$nextTick(() => {
-                this.play();
+//                this.play();
             })
         },
         filters: {
@@ -1130,7 +1133,7 @@
             },
             currentRowIndex() {
                 console.log(this.$refs.lyrics.scrollHeight);
-                this.$refs.lyrics.scrollTop = this.currentRowIndex * (this.$refs.lyrics.scrollHeight/this.currentLyrics.length);
+                this.$refs.lyrics.scrollTop = this.currentRowIndex * (this.$refs.lyrics.scrollHeight / this.currentLyrics.length);
             },
             voice() {
                 this.$refs.audio.volume = this.voice / 100;
@@ -1142,7 +1145,6 @@
                     console.log(this.currentSong);
                     this.getLyric(this.currentSong.lyric);
                     document.title = `${this.currentSong.song_name}-${this.currentSong.artist_name}`;
-//                    this.currentLyrics = this.getLyric(this.currentSong.lyric);
                 },
                 deep: true
             },
