@@ -133,8 +133,12 @@
         }
 
         .ctrl-box {
+            display: inline-block;
             margin: 15% 0 0 10%;
+            padding-left: 10px;
             vertical-align: middle;
+            background-color: rgba(0,0,0,.3);
+            border-radius: 10px;
         }
 
         .play {
@@ -672,7 +676,7 @@
     </div>
     <div class="ctrl-box">
         <div class="last" @click="last"></div>
-        <div :class="[isPlaying ? 'play':'pause']" @click="play"></div>
+        <div :class="[isPlaying ? 'pause':'play']" @click="play"></div>
         <div class="next" @click="next"></div>
         <div class="voice-icon">
             <div @click="voiceCtrl">
@@ -721,7 +725,7 @@
 <template id="search-box">
     <transition name="search">
         <div v-if="isShow" class="search-main">
-            <input type="text" class="search-input" v-model="searchValue" placeholder="请输入歌曲/歌手">
+            <input type="text" class="search-input" v-model="searchValue" placeholder="请输入歌曲/歌手" @keyup.enter="search(searchValue)">
             <button class="search-btn" @click="search(searchValue)">查询</button>
             <ul class="result-list">
                 <li class="item" v-for="item in resultList">
@@ -1137,6 +1141,7 @@
                     this.percent = 0;
                     console.log(this.currentSong);
                     this.getLyric(this.currentSong.lyric);
+                    document.title = `${this.currentSong.song_name}-${this.currentSong.artist_name}`;
 //                    this.currentLyrics = this.getLyric(this.currentSong.lyric);
                 },
                 deep: true
