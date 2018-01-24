@@ -13,6 +13,6 @@ npm install --save
 
 ```
 ```
-node reuqest.js
+npm run dev
 ```
 **open 'localhost:3000' you can use it like a music web!**
